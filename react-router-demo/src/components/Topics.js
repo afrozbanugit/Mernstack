@@ -54,6 +54,13 @@ export default class Topics extends React.Component{
     changeCity=()=>{
         this.setState({id:2,name:"Keith",city:"NewYork"})
     }
+
+    onForceUpdate=()=>{
+        this.state.userId=200
+        this.forceUpdate();
+        console.log("Inside force update - calls render method directly and skips shouldcomponentupdate method call"); // Not recommended
+        console.log("current state ", this.state);
+    }
     render(){
         console.log("Render is called ");
         return(<>
@@ -67,6 +74,7 @@ export default class Topics extends React.Component{
                 <li><Link to="/router">Router</Link></li>
             </ul>
             <button className="btn btn-primary" onClick={this.changeCity}>Change User Details</button>
+            <button className="btn btn-primary" onClick={this.onForceUpdate}>Force Update</button>
         </>)
 
     }
