@@ -1,0 +1,32 @@
+body{
+    font-family: sans-serif;
+    margin: auto;
+    text-align: center;
+    background-color: antiquewhite;
+}
+nav{
+    display: flex;
+    background-color: darkcyan;
+    color:antiquewhite;
+    align-items: center;
+    margin:0;
+  }
+  
+  nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  nav a:hover {
+    background-color: #555;
+  }
+  
+  nav a.active {
+    background-color: #007bff;
+    font-weight: bold;
+  }
+  
