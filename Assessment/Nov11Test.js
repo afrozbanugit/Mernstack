@@ -254,5 +254,5 @@ request respone model should be. It specifies the methods GET,PUT,POST,DELETE to
 
 SPA and Classical applications - SPA is Single Page application where only a particular component or part of a
 web page is loaded giving users a faster latency experience than the classical applications where the entire
-page is loaded everytime from the server as a respone .
+page is loaded everytime from the server as a respone 
 */

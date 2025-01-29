@@ -1,0 +1,19 @@
+export const ADD_USER ="ADD_USER"
+export const UPDATE_USER_IN_STORE ="UPDATE_USER_IN_STORE"
+export const ADD_STUDENT="ADD_STUDENT"
+export const ADD_PRODUCT ="ADD_PRODUCT_TO_STORE"
+//Cart related Actions
+export const ADD_ITEM_TO_CART ="ADD_ITEM_TO_CART";
+export const REMOVE_ITEM ="REMOVE_ITEM_FROM_CART";
+export const EMPTY_CART ="EMPTY_CART";
+export const UPDATE_ITEM_IN_CART ="UPDATE_ITEM_IN_CART";
+//Coupon Actions
+export const ADD_NEW_COUPON ="ADD_COUPON";
+//Recent Orders
+export const ADD_ORDERLIST_TO_STORE ="ADD_ORDER_TO_STORE";
+export const REMOVE_ORDER_IN_STORE="REMOVE_ORDER_FROM_STORE";
+export const UPDATE_ORDER_IN_STORE="UPDATE_ORDER_IN_STORE";
+
+//Hobbies Actions
+export const ADD_HOBBY_TO_DB="ADD_HOBBY_TO_DB";
+export const ADD_HOBBY_TO_STORE="ADD_HOBBY_TO_STORE";

@@ -9,9 +9,12 @@ export default function ReactPage(){
     const {userId} = useParams();
     const [user,setUser] = useState({userId:userId,name:"Keith",email:"Keith@gmail.com",address:"123 xyz ave"});
 
-    function onResetEmail(previousState){
+    function onResetEmail(){
         console.log(user);
-        setUser({...previousState,email:"Keith123@gmail.com"});
+        setUser((previousState)=>{
+            return ({...previousState,email:"Keith123@gmail.com"});
+        });
+        console.log(user);
     }
     return(<>
         <Header/>
