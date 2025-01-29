@@ -5,14 +5,14 @@ const ClockComponent =(props)=>{
 
     const [time, setTime] = useState(new Date());
 
-   /*  useEffect(() => {
+    useEffect(() => {
         const intervalId = setInterval(() => {
           setTime(new Date());
         }, 1000);
 
          // Cleanup so it doesnt build infinite calls
         return () => clearInterval(intervalId);
-      }, []); */
+      }, []);
     
       const formattedTime = time.toLocaleTimeString();
     
