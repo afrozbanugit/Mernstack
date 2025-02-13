@@ -9,7 +9,7 @@ let InitialState={
             }
 
 let ProductReducer =(state=InitialState,action)=>{
-    console.log("Current state in store ",state);
+ //   console.log("Current state in store ",state);
     switch(action.type){
         case ActionType.ADD_PRODUCT : {
             console.log("Add products to store->" ,action.payload.products );

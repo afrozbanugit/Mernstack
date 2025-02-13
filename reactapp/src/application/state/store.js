@@ -7,6 +7,7 @@ import CartReducer from "./cart/CartReducer";
 import CouponReducer from "./Coupon/CouponReducer";
 import OrderReducer from "./orders/OrderReducer";
 import HobbyReducer from "./hobby/HobbyReducer";
+import NotificationReducer from "./Notification/NotificationReducer";
 //store - is a redux object which helps us handle state changes
 //reducer - is a function which works with switch case (for each action type) and updates the state
 // for every change returns new state
@@ -21,7 +22,8 @@ let rootReducer = combineReducers({
   CartReducer,
   CouponReducer,
   OrderReducer,
-  HobbyReducer
+  HobbyReducer,
+  NotificationReducer
     
   //  StudentReducer  
 })

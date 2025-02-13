@@ -1,5 +1,9 @@
 import axios from "axios";
-import { ADD_ITEM_TO_CART,REMOVE_ITEM,UPDATE_ITEM_IN_CART } from "../ActionTypes";
+import { ADD_ITEM_TO_CART,ADD_NEW_NOTIFICATION,EMPTY_CART,REMOVE_ITEM,UPDATE_ITEM_IN_CART } from "../ActionTypes";
+import { AddNewNotification } from "../Notification/NotificationAction";
+import { useSelector } from "react-redux";
+
+
 
 export const AddItemToCart =(selectedProduct)=>{
     console.log("Inside CartAction - AddItemToCart")
@@ -16,13 +20,29 @@ export const RemoveItemFromCart = (itemId)=>{
     }
 }
 
-export const UpdateItemsInCart =(itemId,itemQuantity)=>{
+export const EmptyCartInStore = (userId)=>{
+    return{
+        type:EMPTY_CART,
+        payload: {userId:userId}
+    }
+}
 
+export const RemoveCartListInDB =(userId)=>{
+    console.log("User id RemoveCartListInDB", userId)
+    return (function(dispatcher){
+        axios.post("http://localhost:9000/cart/api/emptycart",{userId:userId})
+        .then((response)=>{
+            console.log("Cart emptied for user ", response.data);
+            dispatcher(EmptyCartInStore(userId))
+        })
+        .catch((error)=>console.error(error))
+    })
+}
+export const UpdateItemsInCart =(itemId,itemQuantity)=>{
     return{
         type: UPDATE_ITEM_IN_CART,
         payload:{itemId,itemQuantity}
     }
-
 }
 
 export const SaveCartToDB =(cartList,userId)=>{
@@ -40,13 +60,17 @@ export const SaveCartToDB =(cartList,userId)=>{
 }
 
 export const fetchCartItems = (userId)=>{
-    console.log("User ID", userId);
+ //   console.log("User ID", userId);
     return(async function(dispatcher){
        let response = await axios.post("http://localhost:9000/cart/api/getall",{userId:userId});
-       if(response.length > 0){
-        console.log("Cart Action - Fetch Cart Item" ,response.data[0].cart);
+       console.log(response.data);
+       if(response.data.length > 0){
+     //   console.log("Cart Action - Fetch Cart Item" ,response.data[0].cart);
         let cartItems = response.data[0].cart;
-        console.log("Cart Items ", cartItems);
+        
+        dispatcher(AddNewNotification({message:cartItems.length + " item in the cart for checkout", count: 1}));
+       
+    //    console.log("Cart Items ", cartItems);
        cartItems && cartItems.length >0 ? cartItems.forEach(item => {
             dispatcher(AddItemToCart(item));
        }) : [];

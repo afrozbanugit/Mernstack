@@ -52,6 +52,7 @@ let header = (props)=>{
                 <NavLink to="/about" className="button" activeclassname="true"> About </NavLink>
                 <NavLink to="/clock" className="button" activeclassname="true"> Clock </NavLink>
                 <NavLink to="/hobby" className="button" activeclassname="true"> Hobby </NavLink>
+               
             </div>
     }
     </>)

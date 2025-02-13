@@ -16,6 +16,7 @@ import RecentOrdersComponent from "./ApplicationComponents/RecentOrders/RecentOr
 import StarRating from "./ApplicationComponents/StarRating/StarRating";
 import ClockComponent from "./components/CommonComponents/ClockComponent";
 import Hobbies from "./ApplicationComponents/Hobby/Hobbies";
+import NotificationComponent from "./ApplicationComponents/Notification/NotificationComponent";
 
 
 export default class App3 extends React.Component{
@@ -29,6 +30,7 @@ export default class App3 extends React.Component{
         return(<>
         
             <BrowserRouter>
+            <NotificationComponent/>
             <Header/>
                 <Routes>
                     <Route path="/" element={<Home user={this.state.user} />}/>
@@ -45,7 +47,8 @@ export default class App3 extends React.Component{
                     <Route path="/recentorders" element={<RecentOrdersComponent/>}/>
                     <Route path="/rating" element={<StarRating/>}/>
                     <Route path="/clock" element={<ClockComponent/>}/>
-                    <Route path="/hobby" element={<Hobbies/>}/>
+                    <Route path="/notification" element={<NotificationComponent/>}/>
+                    {/* <Route path="/hobby" element={<Hobbies/>}/> */}
                 </Routes>            
             </BrowserRouter>
             <Footer/>

@@ -35,6 +35,8 @@ myApp.use("/order",orderApp);
 orderApp.use("/",orderRoute);
 myApp.use("/hobby",hobbyApp);
 hobbyApp.use("/",hobbyRoute);
+myApp.use("/review",reviewApp);
+reviewApp.use("/",reviewRoute);
 
 
 //This in the backend actually calls http module from node and http.createServer() and apply that to our myApp

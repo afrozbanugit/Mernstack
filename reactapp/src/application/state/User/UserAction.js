@@ -1,5 +1,6 @@
 import * as ActionTypes  from "../ActionTypes"
 import axios from "axios";
+import {fetchCartItems} from "../../state/cart/CartAction"
 /* When the below function is dispatched it returns a java script object that is returned to store.
 The store then calls the corresponding reducer with the action type and new state- this will be taken care
 of by Redux internally. Hence we dont call the reducer explicitely. */
@@ -8,7 +9,7 @@ of by Redux internally. Hence we dont call the reducer explicitely. */
 export const AddUserToStore = (user) =>{
     return{
         type:ActionTypes.ADD_USER,
-        payload:user
+        payload:{user}
     }
 }
 
@@ -38,6 +39,7 @@ it can then dispatch a plain action object to update the store. */
             const savedUser = await rawResponse.json();    
             console.log(savedUser);
             dispatch(AddUserToStore(savedUser))
+            
         }catch(error){
         console.log(error);
         }
@@ -52,8 +54,9 @@ export const SaveUserToDBUsingAxios = (userObj)=>{
             userObj // the user state object we dispatch from the user component
         ).then((collection)=>{
             let loggedUser = collection.data
-            console.log(loggedUser)
+            console.log("Logged user ",loggedUser)
             dispatch(AddUserToStore(loggedUser))
+            dispatch(fetchCartItems(loggedUser._id))
         })
         .catch((error)=>console.log(error))
     }

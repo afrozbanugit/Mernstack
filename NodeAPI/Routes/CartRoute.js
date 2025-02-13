@@ -29,7 +29,16 @@ cartRoute.post("/api/getall",(req,res)=>{
     cartModel.find({userId:req.body.userId})
             .then((data)=>{
                 console.log("Fetched data from DB",data);
-                res.status(200).json(data)})
+                res.status(200).send(data)})
+            .catch(error=>res.status(500).send(error));
+})
+
+cartRoute.post("/api/emptycart",(req,res)=>{
+    console.log("User ID ",req.body);
+    cartModel.deleteOne({userId:req.body.userId})
+            .then((data)=>{
+                console.log("current cart list ",data);
+                res.status(200).send(data)})
             .catch(error=>res.status(500).send(error));
 })
 

@@ -1,9 +1,8 @@
 import React,{useEffect, useState} from "react";
 import ProductDetails from "./Order-ProductDetail";
 import {useDispatch, useSelector} from "react-redux";
-import { CancelOrder,ReOrder } from "../../state/orders/OrderAction";
+import { CancelOrder,ReOrder,ChangeOrderStatus } from "../../state/orders/OrderAction";
 import Button from 'react-bootstrap/Button';
-import StarRating from "../StarRating/StarRating";
 
 const OrderItem =(props)=>{
 
@@ -13,6 +12,7 @@ const OrderItem =(props)=>{
     let [datediff,setdatediff] = useState(0);
     const [status,setStatus] =useState("");
     const dateString = props.order.date;
+    const orderStatus = props.order.status;
     const date = new Date(dateString);
             // Format the date
     const formattedDate = date.toLocaleDateString('en-US', { 
@@ -25,11 +25,6 @@ const OrderItem =(props)=>{
     const total = props.order.total;
     const products = props.order.products;  
     const userId = user._id;
-    /* console.log("products ",products);
-    console.log("toggle ",toggle);
-    console.log("userId ",userId);
-    console.log("orderId ",orderId);
-    console.log("cancelledOrder? ",cancelledOrder); */
 
     useEffect(()=>{
         // Calculate the difference in milliseconds
@@ -38,13 +33,15 @@ const OrderItem =(props)=>{
         datediff = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
      //   console.log("datediff ",datediff);
         setdatediff(datediff);
-        if(datediff >2){
+        if(datediff >2 && (orderStatus=='Re-Ordered' || orderStatus =='In-Progress')){
+            let newstatus ="Delivered";
+            dispatcher(ChangeOrderStatus(orderId,newstatus))
             setStatus("Delivered");
         }
     },[])
 
     let onCancelOrder = (userId,orderId)=>{
-        console.log("Cancel order ", orderId);
+      //  console.log("Cancel order ", orderId);
         dispatcher(CancelOrder(userId,orderId));
     }
 
@@ -60,21 +57,21 @@ const OrderItem =(props)=>{
             <div style={{fontSize:"small"}}># {orderId}</div>
             {cancelledOrder ? 
                 <div> 
-                    <div>Status : Cancelled</div>                   
+                    <div>Status : {orderStatus}</div>                   
                     <Button variant="outline-dark" size="sm" onClick={()=>{onReOrder(userId,orderId)}}>
                     ReOrder</Button>
                 </div>
             : 
             <>
-                {(datediff >2 && props.order.status!='Re-Ordered') || (datediff >10 && props.order.status=='Re-Ordered')? 
+                {(datediff >2 && props.order.status!='In-Progress') || (datediff >10 && props.order.status!='Re-Ordered')? 
                     <>
-                    <div>Status: Delivered</div>                     
+                    <div>Status: {orderStatus}</div>                     
                     <Button variant="outline-dark" size="sm" onClick={()=>{onReOrder(userId,orderId)}}>
                     ReOrder</Button>
                     </>
                 :
                 <>
-                    <div>Status: In-Progress</div>
+                    <div>Status: {orderStatus}</div>
                     <Button variant="outline-dark" size="sm" onClick={()=>{onCancelOrder(userId,orderId)}}>
                         Cancel Order</Button>                
                 </>
@@ -83,13 +80,13 @@ const OrderItem =(props)=>{
             <div>{products && products.length >0 ? <>
                 <div style={{display:"flex",flexWrap:"wrap",margin:"5px",padding:"5px"}}>
                 {products.map((product)=>{
-                    return(<>
+                    return(
                     <div key={product._id} style={{padding:"5px"}}>
                         <img className="prodDetailImage" onClick={()=>setToggle(!toggle)} src={require('../Product/shopping_Cart.jpg')} /> 
                             {toggle ? 
-                       <ProductDetails product={product} status={status} user={user}/> : " "}    
+                       <ProductDetails product={product} status={orderStatus} user={user}/> : " "}    
                        </div>                                       
-                    </>)
+                    )
                 })}
                 </div>
             </>: " "}</div>

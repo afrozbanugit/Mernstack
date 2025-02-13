@@ -34,7 +34,7 @@ orderRoute.post("/api/new/:userId",async (req,res)=>{
 
 orderRoute.post("/api/cancel/:userId/:orderId",async(req,res)=>{
     const {userId,orderId} = req.params;
-    console.log("Order Id to be deleted ", orderId);
+    console.log("Order Id to be cancelled ", orderId);
     console.log("for the user ",userId);
 
     OrdersDataModel.findOne({_id:orderId})
@@ -82,6 +82,29 @@ orderRoute.post("/api/reorder/:userId/:orderId",async(req,res)=>{
                             order.isCancelled=false;
                             order.status='Re-Ordered';
                             order.date=new Date();
+                            order.save();
+                            res.status(200).send(order);
+                        }else{
+                            console.log("Order Id not found");
+                            res.status("NOT FOUND").send();                            
+                        }                        
+                    })
+                    .catch((error)=>{
+                        console.error("Error while fetching Order from DB ", error);
+                        res.status(500).send();
+                    })
+})
+
+orderRoute.post("/api/changestatus/:orderId/:status",async(req,res)=>{
+    const {status,orderId} = req.params;
+    console.log("Change status of order ", orderId);
+    console.log("Change status to ", status);
+    OrdersDataModel.findOne({_id:orderId})
+                    .then((order)=>{
+                        if(order){
+                            console.log("order with id found ", orderId);
+                            order.isCancelled=false;
+                            order.status=status;
                             order.save();
                             res.status(200).send(order);
                         }else{

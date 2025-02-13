@@ -4,7 +4,7 @@ let InitialState= {recentorders:[]};
 const OrderReducer =(state=InitialState,action)=>{
     switch(action.type){
         case ActionTypes.ADD_ORDERLIST_TO_STORE:{
-            console.log(" Order reducer - recent order ")
+       //     console.log(" Order reducer - recent order ")
             return {...state,recentorders:action.payload.recentorders}
         }
         case(ActionTypes.REMOVE_ORDER_IN_STORE):{
@@ -13,8 +13,8 @@ const OrderReducer =(state=InitialState,action)=>{
         }
         case(ActionTypes.UPDATE_ORDER_IN_STORE):{
             const newstate=  state.recentorders.map((order)=>{
-                console.log("order id ", order._id);
-                console.log("order.isCancelled? ", order.isCancelled);
+            //    console.log("order id ", order._id);
+          //      console.log("order.isCancelled? ", order.isCancelled);
                 if(order._id==action.payload.updatedOrder._id){
                     console.log("Order being updated ",order);
                     return {...order,isCancelled:action.payload.updatedOrder.isCancelled,

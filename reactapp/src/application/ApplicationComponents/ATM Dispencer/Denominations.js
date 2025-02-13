@@ -8,27 +8,8 @@ const Denominations =(props)=>{
     console.log("result ", result);
     let denominations =[2000,1000,500,100,50,20,10,5,2,1];
     let denominationCounts ={};
- //   const [result,setResult] = useState();
+    let totalNotes = props.NumberOfNotes;
     let [objectAsArray,setObjectAsArray] = useState([]);
-
-  /*   if(receivedamount >0){
-    let remainingAmount = receivedamount;
-    for(const d of denominations){
-        console.log("d ",d)
-        denominationCounts[d] = Math.floor(remainingAmount / d);
-        console.log("denominationCounts ",denominationCounts);
-        remainingAmount %= d;
-        console.log("Remaining amount ", remainingAmount); */
-    // }
-    // let objArr = Object.entries(denominationCounts);
-  //   let [objectAsArray,setObjectAsArray] = useState({objArr:objArr});
-   //  console.log(objArr);
- //   setResult({denominationCounts})
- //   console.log("Now result is ",result);
- //   setObjectAsArray(objArr);
-  //  console.log("ObjectAs Array ", objectAsArray);
-  //  receivedamount =0;
-   // }
 
 // 1 notes of Rs 1
 return(<>
@@ -47,7 +28,7 @@ return(<>
         : <>
         <div> No denominations to show</div>
         </>}
-
+            <p>Number of Notes dispensed: {totalNotes}</p>
 </div>
 </>)
 

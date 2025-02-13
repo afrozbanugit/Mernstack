@@ -4,26 +4,28 @@ import { useNavigate } from "react-router-dom";
 import CartItemComponent from "./CartItemComponent";
 import {SaveCartToDB,fetchCartItems} from "../../state/cart/CartAction"
 import CartSummary from "./CartSummary";
+import { AddNewNotification, UpdateNotificationCount } from "../../state/Notification/NotificationAction";
+
 
 let CartComponent =(props)=>{
 
     let cartList = useSelector(store => store.CartReducer);
     let user = useSelector((store) => {return store.userReducer.user});
     let couponCode = useSelector((store)=> store.CouponReducer.couponCode);
+    let notificationCount = useSelector(store=>store.NotificationReducer.notificationCount);
     let dispatcher = useDispatch();
     const navigate = useNavigate();
     useEffect(()=>{
+        
         if(user._id){
-            console.log("Dispatch fetchCartItems from DB");
+            console.log("Dispatch fetchCartItems for the user");
             cartList && cartList.length == 0?           
-            dispatcher(fetchCartItems(user._id))
-            :[]
-            }
+             dispatcher(fetchCartItems(user._id))            
+            :console.log(" fetched cart ",cartList)
+    }
     },[])
     
 
-    console.log("Cartlist in Cart Component ", cartList);
-    console.log("Coupon code received from store ", couponCode);
     let calculateSummary =(cartItems)=>{
         let totalAmount =0;
         let numberOfQuantity =0;
@@ -40,11 +42,20 @@ let CartComponent =(props)=>{
         if(userId){
            // alert("User logged in");
             dispatcher(SaveCartToDB(cartList,userId));
+            const notificationItem={
+                message:cartList.length + " items in the cart for checkout",
+                count:++notificationCount}
+            dispatcher(AddNewNotification(notificationItem));
         }else{
             alert("Please Login in to save and checkout cart");
         }
     }
-
+    let gotoCheckout=(cartList)=>{
+        let orderData = calculateSummary(cartList);
+        console.log("Order data calculated", orderData);
+        orderData={...orderData,cartlist:cartList}
+        navigate("/checkout",{state:orderData});
+    }
     return(<>
     {userId && cartList && cartList.length > 0 ?
     <div>
@@ -82,7 +93,8 @@ let CartComponent =(props)=>{
         {props.readOnly? "" :
             <> 
                 <button onClick={()=>{onSaveCart(cartList)}}>Save Cart</button>
-                <button onClick={()=>{navigate("/checkout")}}>Proceed to Checkout</button>
+                {}
+                <button onClick={()=>{ gotoCheckout(cartList)}}>Proceed to Checkout</button>
             </>
         }
     </div>

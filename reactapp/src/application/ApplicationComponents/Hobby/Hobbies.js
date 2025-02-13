@@ -14,7 +14,7 @@ export default function Hobbies(){
     const onSaveData =(event)=>{
        // setHobbyName
        let hobby = hobbyname;
-        console.log(hobby)
+    //    console.log(hobby)
         const Hobby ={hobby};
         console.log("dispatch hobby list");
         dispatcher(AddHobbyToDB(Hobby));

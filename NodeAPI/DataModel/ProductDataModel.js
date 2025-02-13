@@ -4,7 +4,7 @@ let Schema = mongoose.Schema;
 let ProductSchema =new Schema({prodName:{type:String,required:true},
                     price:{type:Number,required:true},
                     description:String,
-                    rating:Number,
+                    rating:{type:Number,min:1,max:5},
                     quantity: {type: Number, default:1}},
                     {
                         versionKey: false //false - set to false then it wont create in mongodb, don't set it to true, if you want _v just dont add this

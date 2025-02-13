@@ -19,18 +19,16 @@ let [street,setStreet] = useState(user.street);
 const [selectedValue, setSelectedValue] = useState('');
 const [isLoading, setIsLoading] = useState(false);
 
-console.log("UserName ",userName);
-console.log(password);
-console.log("Hobbylist ", hobbylist);
 
 useEffect(()=>{
     console.log("Inside useEffect of user component");
-    hobbylist && hobbylist.length <1 ? 
+   /*  hobbylist && hobbylist.length <1 ? 
     dispatcher(FetchHobbiesfromDB())
-    : " "
+    : " " */
+    console.log("user ", user);    
     setIsLoading(true);
-})
-let onTextChange=(event)=>{
+    },[])
+    let onTextChange=(event)=>{
     
     const classlist =event.target.classList;
     if(classlist && classlist.contains("username")){
@@ -48,12 +46,9 @@ let onTextChange=(event)=>{
 }
 
 let loginUser=(event)=>{
-    console.log("Login");
-    user={userName,password,email,mobile,street}
-  //  dispatcher(AddUserToStore(user));
-   // dispatcher(saveToDbUsingFetch(user));
-   dispatcher(SaveUserToDBUsingAxios(user));
-    event.preventDefault();
+        user={userName,password,email,mobile,street}        
+        dispatcher(SaveUserToDBUsingAxios(user));
+        event.preventDefault();
 }
 
 let onSaveUserInfo =()=>{
@@ -61,9 +56,9 @@ let onSaveUserInfo =()=>{
     console.log("user Name ", loggedInUser);
     console.log("user ", user);
     if(user._id){ 
-        console.log("Selected hobby ", selectedValue);
+     //   console.log("Selected hobby ", selectedValue);
         user = {...user,hobby:selectedValue}
-        console.log("user ", user);
+      //  console.log("user ", user);
         dispatcher(UpdateUserInfo(user));
     }else{
         alert("Please login before saving other details")

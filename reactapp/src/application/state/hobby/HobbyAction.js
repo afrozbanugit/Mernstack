@@ -27,7 +27,7 @@ export const FetchHobbiesfromDB =()=>{
     return(async function(dispatcher){
      try{   
      const response = await axios.get("http://localhost:9000/hobby/api/getall");
-     console.log("hobby data from db ", response.data);
+  //   console.log("hobby data from db ", response.data);
      dispatcher(AddHobbytoStore(response.data)) ;
      }catch(error){
         console.error("Error while fetching data to db");

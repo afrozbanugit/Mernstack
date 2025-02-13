@@ -1,14 +1,16 @@
 import axios from "axios";
 import * as ActionType from "../ActionTypes"
+import {RemoveCartListInDB} from "../cart/CartAction"
+import { AddNewNotification } from "../Notification/NotificationAction";
 
 
 export const SaveOrderToDB =(newOrder)=>{
 return( async function(dispatcher){
     try{
         let response = await axios.post("http://localhost:9000/order/api/new/" +newOrder.userId,newOrder);
-     //   console.log(response.data);
+        console.log("New order placed ",response.data);
         dispatcher(FetchOrdersFromDB(newOrder.userId));
-        
+        dispatcher(RemoveCartListInDB(newOrder.userId));
     }catch(err){
         console.log(err);
     }
@@ -27,6 +29,7 @@ export const CancelOrder =(userId,orderId)=>{
       let cancelledOrder =  await axios.post("http://localhost:9000/order/api/cancel/" +userId +"/" + orderId);
       console.log("Cancelled order ", cancelledOrder.data);
         dispatcher(UpdateOrderInStore(cancelledOrder.data));
+        dispatcher(AddNewNotification({message:"Order with Id " + cancelledOrder.data._id + " is Cancelled",count:0}))
     })
 }
 
@@ -59,5 +62,13 @@ export const UpdateOrderInStore =(updatedOrder)=>{
     return({
         type:ActionType.UPDATE_ORDER_IN_STORE,
         payload:{updatedOrder}
+    })
+}
+
+export const ChangeOrderStatus=(orderId,status)=>{
+    return (async (dispatcher)=>{
+       let response= await axios.post("http://localhost:9000/order/api/changestatus/" + orderId  +"/"+ status);
+       console.log("Status changed ", response.data);
+       dispatcher(UpdateOrderInStore(response.data));
     })
 }

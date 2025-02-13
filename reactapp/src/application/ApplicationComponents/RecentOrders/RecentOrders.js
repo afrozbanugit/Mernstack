@@ -9,7 +9,7 @@ const user = useSelector(store => store.userReducer.user);
 const dispatcher = useDispatch();
 
 useEffect(()=>{       
-    console.log("Recent order of this user ",recentorders); 
+ //   console.log("Recent order of this user ",recentorders); 
     recentorders && recentorders.length <1 ? 
         dispatcher(FetchOrdersFromDB(user._id))    
     : " "
