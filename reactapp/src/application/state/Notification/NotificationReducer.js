@@ -6,7 +6,7 @@ const InitialState = {notificationList:["This Weeks Deals!",
                         notificationCount:0                                
                     }
 const NotificationReducer =(state=InitialState,action)=>{
-    console.log("In Notification Reducer");
+   
     switch(action.type){
         case(ActionTypes.ADD_NEW_NOTIFICATION):{
             return {notificationList:[...state.notificationList,action.payload.message],
@@ -20,7 +20,7 @@ const NotificationReducer =(state=InitialState,action)=>{
             let newstate= state.notificationList.filter((notification)=>{
                 return !(notification.includes("cart for checkout") || notification.includes("added to cart"))
             })
-            return{notificationList:newstate,notificationCount:action.payload.count}
+            return{notificationList:newstate,notificationCount:newstate.length-3}
         }
         default: return state;
     }

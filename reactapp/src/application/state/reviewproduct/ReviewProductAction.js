@@ -1,5 +1,5 @@
 import * as ActionTypes from "../ActionTypes";
-import axios from "axios";
+import axios from "../../config/axiosConfiguration";
 
 export const AddProductReviewtoDB =(ratingdata)=>{
 

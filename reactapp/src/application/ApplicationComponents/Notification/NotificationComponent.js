@@ -2,8 +2,8 @@ import React,{useEffect, useState}from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { ToastContainer,toast } from "react-toastify";
 import {useNavigate} from "react-router-dom"
-import { showSuccess } from "./Notification";
 import { useSelector } from "react-redux";
+import Button from "react-bootstrap/esm/Button";
 
 const NotificationComponent =()=>{
 
@@ -54,9 +54,15 @@ const NotificationComponent =()=>{
         zIndex: 10,
         cursor: 'pointer',
       };
+    let logout =()=>{
+      localStorage.removeItem("jwt");
+      console.log("Logged out successfully!");
+      window.location.href = "/login";
+    }
 
     return(<>    
         <div style={iconStyle}>
+        <Button variant="outline-dark" onClick={logout}>Logout</Button>
         <FaUserCircle size={25} color="brown" onClick={showToastMessage} />
         {notificationCount !=0 ? 
         <span style={{ position: "absolute",color:"brown",fontSize:"small" }}>{notificationCount}</span> 

@@ -1,5 +1,5 @@
 import * as ActionType from "../ActionTypes";
-import axios from "axios";
+import axios from "../../config/axiosConfiguration";
 
 let AddProductToStore = (products)=>{
     return{

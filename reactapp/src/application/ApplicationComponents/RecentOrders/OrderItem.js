@@ -36,7 +36,7 @@ const OrderItem =(props)=>{
         if(datediff >2 && (orderStatus=='Re-Ordered' || orderStatus =='In-Progress')){
             let newstatus ="Delivered";
             dispatcher(ChangeOrderStatus(orderId,newstatus))
-            setStatus("Delivered");
+            
         }
     },[])
 

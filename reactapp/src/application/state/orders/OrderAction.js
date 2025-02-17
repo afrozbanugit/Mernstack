@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../config/axiosConfiguration";
 import * as ActionType from "../ActionTypes"
 import {RemoveCartListInDB} from "../cart/CartAction"
 import { AddNewNotification } from "../Notification/NotificationAction";

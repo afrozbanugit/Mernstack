@@ -17,16 +17,11 @@ let CheckoutComponent = (props)=>{
     let location = useLocation();
     const orderData = location.state;
 
-    console.log("Order data ", orderData);
-    console.log("User from checkout component", user);
-    console.log("Cartlist from check out component",cartList);
-    console.log("payment ",payment);
-
     const orderDetails = {  date:new Date().toLocaleDateString(),
                         totalAmount: orderData.totalAmount, 
                         quantity:orderData.count,
                         cartlist:orderData.cartlist};
-                        console.log("orderDetails ", orderDetails);
+    console.log("orderDetails ", orderDetails);
     useEffect(()=>{
         //My public key here
         emailjs.init("3HhT0xCPW2u4mUOnI")
@@ -40,7 +35,7 @@ let CheckoutComponent = (props)=>{
         }
         console.log("order ", order);
         dispatcher(SaveOrderToDB(order));        
-        dispatcher(RemoveNotification({message:" item in the cart for checkout", count: notificationCount-2}));
+        dispatcher(RemoveNotification({message:" item in the cart for checkout", count: 0}));
         sendEmail(order,user);
     }
 
@@ -54,7 +49,7 @@ let CheckoutComponent = (props)=>{
                 to_name: user.userName.toUpperCase(),
                 message: "Order placed on " + order.date +".It was pleasure doing business with you."
             });
-            alert("Email successfully sent! Check inbox");
+       //     alert("Email successfully sent! Check inbox");
           } catch (error) {
             console.log(error);
           } finally {

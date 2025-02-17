@@ -52,13 +52,21 @@ export const SaveUserToDBUsingAxios = (userObj)=>{
     return (dispatch)=>{
         axios.post("http://localhost:9000/user/api/signinup",//uri or end point of singninup api
             userObj // the user state object we dispatch from the user component
-        ).then((collection)=>{
-            let loggedUser = collection.data
-            console.log("Logged user ",loggedUser)
-            dispatch(AddUserToStore(loggedUser))
-            dispatch(fetchCartItems(loggedUser._id))
+        ).then((response)=>{
+            let loggedUser = response.data;
+            if(loggedUser.token){
+                console.log("Logged user token ",loggedUser.token)
+                localStorage.setItem("jwt", loggedUser.token); // Store token
+                console.log("Login successful, token saved!");
+                dispatch(AddUserToStore(loggedUser.user))
+                dispatch(fetchCartItems(loggedUser.user._id))
+            }
         })
-        .catch((error)=>console.log(error))
+        .catch((error)=>{
+            console.log(error);
+            console.log("Invalid credentials");
+            alert("Invalid Credentials");
+        })
     }
 }
 

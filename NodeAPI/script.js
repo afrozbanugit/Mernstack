@@ -8,7 +8,7 @@ let orderRoute = require("./Routes/OrderRoute")
 let reviewRoute = require("./Routes/ReviewRoute")
 let hobbyRoute =require("./Routes/HobbyRoute")
 let cors = require("cors");
-
+let authenticateToken = require("./Routes/AuthenticateToken");
 let myApp = expressInstance();
 const PORT = 9000;
 let userApp = expressInstance(); //There can be multiple apps inside same project
@@ -27,15 +27,15 @@ myApp.use("/user",userApp); //whenever the route is /user our userApp is mounted
 userApp.use("/",userRoute);
 myApp.use("/student",studentApp);
 studentApp.use("/",studentRoute)
-myApp.use("/product",productApp);
+myApp.use("/product",authenticateToken,productApp);
 productApp.use("/",productRoute);
-myApp.use("/cart",cartApp);
+myApp.use("/cart",authenticateToken,cartApp);
 cartApp.use("/",cartRoute);
-myApp.use("/order",orderApp);
+myApp.use("/order",authenticateToken,orderApp);
 orderApp.use("/",orderRoute);
 myApp.use("/hobby",hobbyApp);
 hobbyApp.use("/",hobbyRoute);
-myApp.use("/review",reviewApp);
+myApp.use("/review",authenticateToken,reviewApp);
 reviewApp.use("/",reviewRoute);
 
 

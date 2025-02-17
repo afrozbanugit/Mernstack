@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../config/axiosConfiguration";
 import { ADD_ITEM_TO_CART,ADD_NEW_NOTIFICATION,EMPTY_CART,REMOVE_ITEM,UPDATE_ITEM_IN_CART } from "../ActionTypes";
 import { AddNewNotification } from "../Notification/NotificationAction";
 import { useSelector } from "react-redux";
@@ -62,6 +62,7 @@ export const SaveCartToDB =(cartList,userId)=>{
 export const fetchCartItems = (userId)=>{
  //   console.log("User ID", userId);
     return(async function(dispatcher){
+        console.log("Fetch cart items of user ",userId);
        let response = await axios.post("http://localhost:9000/cart/api/getall",{userId:userId});
        console.log(response.data);
        if(response.data.length > 0){
